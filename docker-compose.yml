@@ -1,0 +1,18 @@
+version: "3.8"
+
+services:
+  web:
+    image: hashicorp/http-echo
+    command: ["-text=Hola desde $HOSTNAME", "-listen=:80"]
+    environment:
+      - HOSTNAME
+    deploy:
+      replicas: 3
+      restart_policy:
+        condition: on-failure
+    networks:
+      - proxy
+
+networks:
+  proxy:
+    external: true
